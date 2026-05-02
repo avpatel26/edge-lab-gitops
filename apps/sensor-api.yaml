@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sensor-api
+  labels:
+    app: sensor-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sensor-api
+  template:
+    metadata:
+      labels:
+        app: sensor-api
+    spec:
+      containers:
+        - name: sensor-api
+          image: avipatel2/sensor-api:v1
+          ports:
+            - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sensor-api
+  labels:
+    app: sensor-api
+spec:
+  selector:
+    app: sensor-api
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+
